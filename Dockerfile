@@ -1,3 +1,9 @@
+FROM node:16-alpine AS frontend
+
+COPY frontend .
+RUN yarn install
+RUN yarn build
+
 FROM node:16-alpine AS deps
 
 COPY package.json package.json
@@ -21,6 +27,7 @@ COPY --from=builder build build
 COPY --from=deps node_modules node_modules
 COPY --from=deps package.json package.json
 COPY --from=deps yarn.lock yarn.lock
+COPY --from=frontend build frontend/build
 
 RUN yarn install --production
 

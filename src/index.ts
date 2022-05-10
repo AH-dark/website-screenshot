@@ -6,6 +6,9 @@ import Screenshot from "./application/Screenshot";
 
 const app = express();
 
+app.use("/", express.static("./frontend/build/"));
+app.use("/static/", express.static("./frontend/build/"));
+
 app.use(
     cors((req, callback) => {
         callback(null, {
