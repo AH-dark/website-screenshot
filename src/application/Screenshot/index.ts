@@ -32,7 +32,10 @@ const takeShot = async (domain: string, path: string) => {
 const Screenshot = (req: Request, res: Response) => {
     const parsed = req.url.split("/");
     const domain = parsed[1];
-    const path = req.originalUrl.slice(req.url.indexOf(domain) + domain.length);
+    let path = req.url.slice(req.url.indexOf(domain) + domain.length);
+    if (path.endsWith("/index.html")) {
+        path = path.slice(0, path.length - "/index.html".length);
+    }
 
     takeShot(domain, path)
         .then((data) => {
