@@ -34,7 +34,7 @@ RUN yarn install --production
 RUN apk update && \
     apk upgrade && \
     apk add --update ca-certificates && \
-    apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont && \
+    apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont ttf-dejavu fontconfig && \
     rm -rf /var/cache/apk/*
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
