@@ -33,7 +33,6 @@ RUN yarn install --production
 
 RUN apt update -y && \
     apt upgrade -y && \
-    apt install --update ca-certificates -y && \
     apt install chromium nss freetype harfbuzz ca-certificates -y
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
