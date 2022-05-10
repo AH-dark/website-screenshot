@@ -37,4 +37,8 @@ RUN apk update && \
     apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont && \
     rm -rf /var/cache/apk/*
 
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 ENTRYPOINT node build/index.js
