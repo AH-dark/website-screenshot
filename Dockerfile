@@ -21,7 +21,7 @@ COPY --from=deps yarn.lock yarn.lock
 
 RUN yarn build
 
-FROM node:16-alpine AS runner
+FROM node:16 AS runner
 
 COPY --from=builder build build
 COPY --from=deps node_modules node_modules
@@ -31,11 +31,10 @@ COPY --from=frontend build frontend/build
 
 RUN yarn install --production
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --update ca-certificates && \
-    apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont ttf-dejavu fontconfig && \
-    rm -rf /var/cache/apk/*
+RUN apt update && \
+    apt upgrade && \
+    apt install --update ca-certificates && \
+    apt install chromium nss freetype harfbuzz ca-certificates
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
