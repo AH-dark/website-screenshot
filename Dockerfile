@@ -31,10 +31,10 @@ COPY --from=frontend build frontend/build
 
 RUN yarn install --production
 
-RUN apt update && \
-    apt upgrade && \
-    apt install --update ca-certificates && \
-    apt install chromium nss freetype harfbuzz ca-certificates
+RUN apt update -y && \
+    apt upgrade -y && \
+    apt install --update ca-certificates -y && \
+    apt install chromium nss freetype harfbuzz ca-certificates -y
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
