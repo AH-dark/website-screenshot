@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import puppeteer from "puppeteer";
 import { size, timeout } from "../../global";
 
@@ -20,7 +20,7 @@ const takeShot = async (domain: string, path: string) => {
 
     const buffer = await page.screenshot({
         encoding: "binary",
-        type: "png",
+        type: "webp",
     });
 
     await browser.close();
@@ -47,4 +47,11 @@ const Screenshot = (req: Request, res: Response) => {
         });
 };
 
-export default Screenshot;
+const router = express.Router();
+
+router.all(
+    RegExp("^/[a-zA-Z\\d][-a-zA-Z\\d]{0,62}(\\.[a-zA-Z\\d][-a-zA-Z\\d]{0,62})+\\.?/"),
+    Screenshot
+);
+
+export default router;
