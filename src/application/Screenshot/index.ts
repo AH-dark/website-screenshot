@@ -4,7 +4,7 @@ import { size, timeout } from "../../global";
 
 const takeShot = async (domain: string, path: string) => {
     const browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu", "--headless"],
         defaultViewport: {
             width: size.width,
             height: size.height,

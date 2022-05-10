@@ -31,4 +31,10 @@ COPY --from=frontend build frontend/build
 
 RUN yarn install --production
 
+RUN apk update && \
+    apk upgrade && \
+    apk add --update ca-certificates && \
+    apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont && \
+    rm -rf /var/cache/apk/*
+
 ENTRYPOINT node build/index.js
