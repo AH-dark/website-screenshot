@@ -4,13 +4,14 @@ import { size, timeout } from "../../global";
 
 const takeShot = async (domain: string, path: string) => {
     const browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"],
+        args: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"],
         defaultViewport: {
             width: size.width,
             height: size.height,
         },
         ignoreHTTPSErrors: true,
         timeout: timeout,
+        headless: "chrome",
     });
     const page = await browser.newPage();
     await page.goto(`http://${domain}${path}`, {
@@ -36,6 +37,8 @@ const Screenshot = (req: Request, res: Response) => {
         path = path.slice(0, path.length - "/index.html".length);
     }
 
+    console.log("[Screenshot]", "Prepared to get screenshot:", `http://${domain}${path}`);
+
     takeShot(domain, path)
         .then((data) => {
             console.log("[Screenshot]", "Get screenshot success:", `http://${domain}${path}`);
@@ -52,9 +55,6 @@ const Screenshot = (req: Request, res: Response) => {
 
 const router = express.Router();
 
-router.all(
-    RegExp("^/[a-zA-Z\\d][-a-zA-Z\\d]{0,62}(\\.[a-zA-Z\\d][-a-zA-Z\\d]{0,62})+\\.?/"),
-    Screenshot
-);
+router.all(RegExp("^/\\w[-a-zA-Z\\d]{0,62}(\\.[a-zA-Z\\d][-a-zA-Z\\d]{0,62})+\\.?/?"), Screenshot);
 
 export default router;
