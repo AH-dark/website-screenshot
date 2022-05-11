@@ -4,8 +4,7 @@ import { size, timeout } from "../../global";
 
 const takeShot = async (domain: string, path: string) => {
     const browser = await puppeteer.launch({
-        executablePath: "/usr/bin/chromium-browser",
-        args: ["--no-sandbox", "--headless", "--disable-gpu"],
+        args: ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"],
         defaultViewport: {
             width: size.width,
             height: size.height,
