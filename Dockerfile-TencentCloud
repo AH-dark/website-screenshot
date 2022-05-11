@@ -27,6 +27,7 @@ RUN yarn build
 FROM node:16-alpine AS runner
 
 # Installs latest Chromium (100) package.
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencentyun.com/g' /etc/apk/repositories
 RUN apk update && apk upgrade
 RUN apk add --no-cache \
       chromium \
