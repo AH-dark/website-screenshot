@@ -31,11 +31,11 @@ COPY --from=frontend build frontend/build
 
 RUN yarn install --production
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --update ca-certificates && \
-    apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont font-adobe-100dpi fontconfig && \
-    rm -rf /var/cache/apk/*
+RUN sed -i 's/https/http/' /etc/apk/repositories
+RUN apk update && apk upgrade
+RUN apk add --update ca-certificates
+RUN apk add chromium nss freetype harfbuzz ca-certificates ttf-freefont font-adobe-100dpi fontconfig
+RUN rm -rf /var/cache/apk/*
 
 RUN mkdir /usr/share/fonts/win
 COPY fonts /usr/share/fonts/win
