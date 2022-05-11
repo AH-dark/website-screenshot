@@ -4,14 +4,13 @@ import { size, timeout } from "../../global";
 
 const takeShot = async (domain: string, path: string) => {
     const browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage"],
+        args: ["--no-sandbox", "--headless", "--disable-gpu", "--disable-dev-shm-usage"],
         defaultViewport: {
             width: size.width,
             height: size.height,
         },
         ignoreHTTPSErrors: true,
         timeout: timeout,
-        headless: "chrome",
     });
     const page = await browser.newPage();
     await page.goto(`http://${domain}${path}`, {

@@ -2,7 +2,6 @@ FROM node:16-alpine AS frontend
 
 COPY frontend .
 RUN yarn install
-RUN yarn add puppeteer@13.7.0
 RUN yarn build
 
 FROM node:16-alpine AS deps
@@ -54,5 +53,6 @@ COPY --from=deps yarn.lock yarn.lock
 COPY --from=frontend build frontend/build
 
 RUN yarn install --production
+RUN yarn add puppeteer@13.7.0
 
 ENTRYPOINT node build/index.js
